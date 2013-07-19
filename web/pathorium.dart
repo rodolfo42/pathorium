@@ -3,18 +3,37 @@ import 'package:web_ui/web_ui.dart';
 
 InputElement txtPath = query('#txtPath');
 Element placeHolder = query('#entries .placeholder');
+TableElement table = query("#entries table");
+PathManager manager = new PathManager();
 
-@observable
-String path = 'aa';
+@Observable
+String pathVar = '';
+
+@Observable
+String pathSeparator = ':';
 
 void main() {
   txtPath
     ..onPaste.listen(
-        (e) => handleInput(e.clipboardData.getData('Text'))
+        (e) => varToTable(e.clipboardData.getData('Text'))
     )
     ..onInput.listen(
-        (e) => handleInput(e.target.value)
+        (e) => varToTable(e.target.value)
     );
+  
+  table
+    ..onInput.listen(
+        tableToInput
+    )
+    ..onChange.listen(
+        tableToInput
+    );
+  
+  table.hidden = true;
+  
+  if (window.navigator.appVersion.indexOf("Win")!=-1 ) {
+    pathSeparator = ";";
+  }
 }
 
 void showError(String message) {
@@ -23,31 +42,37 @@ void showError(String message) {
   div.style.display = 'block';
 }
 
-void handleInput(String value) {
-  path = "asdjnaksjdnsad";
-  clearEntries();
-  List<String> entries = value.split(new RegExp(";"));
-  
+void varToTable(String value) {
+  manager.setFromVar(value);
+  updateTable();
+}
+
+void updateInput() {
+  txtPath.value = manager.getVariable();
+}
+
+void updateTable() {
+  var entries = manager.entries;
+  table.hidden = entries.isEmpty;
   placeHolder.hidden = entries.isNotEmpty;
   
-  Iterator it = entries.iterator;
-  while(it.moveNext()) {
-    String entry = it.current;
-    if( entry.isNotEmpty )
-      addEntry(entry);
+  var tbody = table.tBodies.first;
+  tbody.children.clear();
+  
+  if(entries.isNotEmpty) {
+    Iterator it = entries.iterator;
+    while(it.moveNext()) {
+      String entry = it.current;
+      if( entry.isNotEmpty )
+        addTableEntry(entry, tbody);
+    }
   }
 }
 
-void addEntry(String entry) {
-  TableElement entries = query("#entries table");
-  var tbody = entries.tBodies.first;
+void addTableEntry(String entry, tbody) {
   TableRowElement newEntry = new Element.tag('tr');
   
   var cell = new Element.tag('td');
-  cell.nodes.add(new CheckboxInputElement());
-  newEntry.nodes.add(cell);
-  
-  cell = new Element.tag('td');
   var input = new TextInputElement();
   input.value = entry.trim();
   cell.nodes.add(input);
@@ -56,8 +81,37 @@ void addEntry(String entry) {
   tbody.nodes.add(newEntry);
 }
 
-void clearEntries() {
-  TableElement entries = query("#entries table");
-  TableSectionElement tbody = entries.tBodies.first;
-  tbody.children.clear();
+void tableToInput(ev) {
+  manager.clearEntries();
+  table.queryAll('input').forEach( (e) {
+    manager.addEntry(e.value);
+  });
+  updateInput();
+}
+
+
+// logic
+
+class PathManager {
+
+  List<String> entries = new List<String>(0);
+  
+  void setFromVar(String pathVariable) {
+    this.entries = pathVariable.split(pathSeparator);
+  }
+  
+  void removeEntry(int index) {
+    entries.removeAt(index);
+  }
+  
+  String getVariable() {
+    if(entries == null) {
+      return "";
+    }
+    
+    return entries.join(pathSeparator);
+  }
+  
+  void addEntry(String entry) => entries.add(entry);
+  void clearEntries() => entries.clear();  
 }

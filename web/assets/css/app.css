@@ -29,8 +29,18 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 0.75em;
 }
 
-#entries {
-  
+.os {
+  line-height: 25px;
+  font-weight: bold;
+}
+
+#switchPathSep label {
+  font-size: 130%;
+  font-weight: bold;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  line-height: 22px;
 }
 
 #entries .placeholder {

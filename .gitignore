@@ -36,3 +36,7 @@ local.properties
 
 # last commit SHA-1 via post-commit hook
 web/VERSION.txt
+
+# dart builder
+.buildlog
+web/out

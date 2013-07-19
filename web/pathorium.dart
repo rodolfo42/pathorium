@@ -5,7 +5,7 @@ InputElement txtPath = query('#txtPath');
 Element placeHolder = query('#entries .placeholder');
 
 @observable
-var path = 'aa';
+String path = 'aa';
 
 void main() {
   txtPath

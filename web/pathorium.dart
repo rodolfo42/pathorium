@@ -1,7 +1,11 @@
 import 'dart:html';
+import 'package:web_ui/web_ui.dart';
 
 InputElement txtPath = query('#txtPath');
 Element placeHolder = query('#entries .placeholder');
+
+@observable
+var path = 'aa';
 
 void main() {
   txtPath
@@ -20,6 +24,7 @@ void showError(String message) {
 }
 
 void handleInput(String value) {
+  path = "asdjnaksjdnsad";
   clearEntries();
   List<String> entries = value.split(new RegExp(";"));
   

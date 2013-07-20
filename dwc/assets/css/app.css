@@ -1,0 +1,58 @@
+/* Auto-generated from style sheet href = web/assets/css/app.css */
+/* DO NOT EDIT. */
+
+html {
+  height: 100%;
+}
+body {
+  background: #EAEAEA url("../../../assets/img/bg.png") repeat 0 0;
+  font-family: "Open Sans", sans-serif;
+  font-weight: normal;
+  color: #666;
+  height: 100%;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Open Sans", sans-serif;
+}
+#header h1, #header h3, #entries .placeholder {
+  color: rgba(255, 255, 255, 0.2);
+  text-shadow: -1px -1px rgba(0, 0, 0, 0.2);
+}
+#header h3 {
+  line-height: 2.625em;
+}
+.input-label {
+  margin-bottom: 0.75em;
+}
+.os {
+  line-height: 25px;
+  font-weight: bold;
+}
+#switchPathSep label {
+  font-size: 130%;
+  font-weight: bold;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  line-height: 22px;
+}
+#entries .placeholder {
+  text-align: center;
+}
+#entries table {
+  width: 100%;
+  opacity: .8;
+}
+#entries table input {
+  margin: 0.3125em 0;
+}
+#footer {
+  margin-top: 10px;
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+}
+#footer .column {
+  font-size: 90%;
+  color: #666;
+}
+

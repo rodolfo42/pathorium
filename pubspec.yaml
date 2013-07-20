@@ -1,7 +1,0 @@
-name: Pathorium
-version: 1.0.0
-author: Rodolfo Ferreira
-description: Small web-based app to visually organize your path variable entries
-dependencies:
-  browser: any
-  web_ui: any

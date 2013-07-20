@@ -1,4 +1,6 @@
 import 'dart:html';
+import 'dart:async';
+import 'dart:json';
 import 'package:web_ui/web_ui.dart';
 
 InputElement txtPath = query('#txtPath');
@@ -11,6 +13,9 @@ String pathVar = '';
 
 @Observable
 String pathSeparator = ':';
+
+@Observable
+String sha1 = '';
 
 void main() {
   txtPath
@@ -34,6 +39,13 @@ void main() {
   if (window.navigator.appVersion.indexOf("Win")!=-1 ) {
     pathSeparator = ";";
   }
+  
+  // get latest sha-1 commit
+  var gitUrl = 'https://api.github.com/repos/rodolfo42/pathorium/commits/master';
+  HttpRequest.getString(gitUrl).then((commit) {
+    Map parsed = parse(commit);
+    sha1 = parsed['sha'];
+  });
 }
 
 void showError(String message) {
